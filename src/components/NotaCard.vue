@@ -11,7 +11,7 @@
             <v-card-actions class="justify-end">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn text icon color="white" v-on="on">
+                  <v-btn text icon color="white" v-on="on" @click="$emit('clickEditarNota', id)">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -19,7 +19,7 @@
               </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn text icon color="white" v-on="on">
+                  <v-btn text icon color="white" v-on="on" @click="$emit('clickRemoverNota', id)">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </template>
@@ -32,7 +32,10 @@
 
 <script>
 export default {
-    name: "NotaCard",
-    props: ['nota']
+  name: 'NotaCard',
+  props: {
+    nota: Object,
+    id: Number
+  }
 }
 </script>
