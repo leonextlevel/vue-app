@@ -1,34 +1,12 @@
 <template>
     <v-container fluid>
       <v-row dense>
-        <v-col v-for="(nota, index) in notas" :key="index" cols="12" xs="12" sm="6"  md="3">
-          <v-card
-            color=secondary
-            dark
-          >
-            <v-card-title class="headline">{{ nota.titulo }}</v-card-title>
-
-            <v-card-subtitle>{{ nota.conteudo }}</v-card-subtitle>
-
-            <v-card-actions class="justify-end">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn text icon color="white" v-on="on">
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                </template>
-                <span>Editar</span>
-              </v-tooltip>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn text icon color="white" v-on="on">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </template>
-                <span>Excluir</span>
-              </v-tooltip>
-            </v-card-actions>
-          </v-card>
+        <v-col 
+          v-for="(nota, index) in notas"
+          :key="index"
+          cols="12" xs="12" sm="6" md="3"
+        >
+          <nota-card :nota="nota" ></nota-card>
         </v-col>
       </v-row>
 
@@ -56,7 +34,11 @@
             <v-btn dark text @click="salvarNota">Salvar</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-form>
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
           <v-container>
             <v-row class="justify-center">
               <v-col
@@ -65,6 +47,7 @@
               >
                 <v-text-field
                   v-model="nota.titulo"
+                  :rules="tituloRules"
                   label="Título"
                   required
                 ></v-text-field>
@@ -72,6 +55,7 @@
               <v-col cols="12" md="8">
                 <v-textarea
                   v-model="nota.conteudo"
+                  :rules="conteudoRules"
                   label="Conteúdo"
                   required
                 ></v-textarea>
@@ -85,8 +69,13 @@
 </template>
 
 <script>
+import NotaCard from './NotaCard.vue'
+
 export default {
   name: 'ListaNotas',
+  components: {
+    NotaCard
+  },
   data () {
       return {
         dialog: false,
@@ -94,23 +83,26 @@ export default {
           titulo: null,
           conteudo: null
         },
-        notas: []
+        notas: [],
+        tituloRules: [
+          v => !!v || 'Título é obrigatório'
+        ],
+        conteudoRules: [
+          v => !!v || 'Conteúdo é obrigatório'
+        ],
       }
   },
   methods: {
     salvarNota() {
-      this.notas.push({
-        titulo: this.nota.titulo,
-        conteudo: this.nota.conteudo
-      });
-      this.dialog = false;
-      this.limparNota()
+      if (this.$refs.form.validate()) {
+          this.notas.push({
+            titulo: this.nota.titulo,
+            conteudo: this.nota.conteudo
+          });
+          this.dialog = false;
+          this.$refs.form.reset()
+        }
     },
-    limparNota() {
-      for(let k in this.nota) {
-        this.nota[k] = null
-      }
-    }
   }
 }
 </script>
