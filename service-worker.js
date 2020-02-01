@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.5298d6500d5d7f17e74afe2a2cc02c25.js"
+  "/precache-manifest.91a311ffa3ad5653ba9480c55e5057e0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "noob-app"});
