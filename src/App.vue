@@ -5,15 +5,9 @@
       color="primary"
       dark
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Notas</v-toolbar-title>
-
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-toolbar-title>NOTAS</v-toolbar-title>
+      <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-content>
