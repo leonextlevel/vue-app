@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
           <v-card
-            color=secondary
+            :color=nota.cor
             dark
           >
             <v-card-title class="headline" v-show="nota">{{ nota.titulo }}</v-card-title>
@@ -11,7 +11,7 @@
             <v-card-actions class="justify-end">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn text icon color="white" v-on="on" @click="$emit('clickEditarNota', id)">
+                  <v-btn text icon v-on="on" @click="$emit('clickEditarNota', id)">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>

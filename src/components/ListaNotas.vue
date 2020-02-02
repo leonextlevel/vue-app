@@ -34,34 +34,52 @@
             <v-btn dark text @click="salvarNota">Salvar</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-form
-          ref="form"
-          lazy-validation
-        >
-          <v-container>
-            <v-row class="justify-center">
-              <v-col
-                cols="12"
-                md="8"
+        <v-container>
+          <v-row class="justify-center">
+            <v-col cols="12" md="8">
+            <v-form
+              ref="form"
+              lazy-validation
+              cols="12" md="8"
+            >
+            <v-col>
+              <v-text-field
+                v-model="nota.titulo"
+                :rules="tituloRules"
+                label="Título"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-textarea
+                v-model="nota.conteudo"
+                :rules="conteudoRules"
+                label="Conteúdo"
+                required
+              ></v-textarea>
+            </v-col>
+            <v-col>
+              <v-label>Cor da Nota</v-label>
+              <v-radio-group
+                v-model="nota.cor"
+                col
+                :rules="corRules"
+                required
               >
-                <v-text-field
-                  v-model="nota.titulo"
-                  :rules="tituloRules"
-                  label="Título"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="8">
-                <v-textarea
-                  v-model="nota.conteudo"
-                  :rules="conteudoRules"
-                  label="Conteúdo"
-                  required
-                ></v-textarea>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
+                <v-radio color=blue label="Azul" value="blue"></v-radio>
+                <v-radio color=red label="Vermelho" value="red"></v-radio>
+                <v-radio color=yellow label="Amarelo" value="yellow"></v-radio>
+                <v-radio color=green label="Verde" value="green"></v-radio>
+              </v-radio-group>
+            </v-col>
+            </v-form>
+            <v-col cols="12" md="5" sm="8" xs="12">
+              <v-switch v-model="prenota" class="ma-2" label="Pré-visualizar nota"></v-switch>
+              <nota-card v-if="prenota" :nota="nota"></nota-card>
+            </v-col>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </v-dialog>
     </v-container>
@@ -78,9 +96,11 @@ export default {
   data () {
     return {
       dialog: false,
+      prenota: false,
       nota: {
         titulo: null,
-        conteudo: null
+        conteudo: null,
+        cor: null,
       },
       notas: [],
       tituloRules: [
@@ -88,6 +108,9 @@ export default {
       ],
       conteudoRules: [
         v => !!v || 'Conteúdo é obrigatório'
+      ],
+      corRules: [
+        v => !!v || 'Cor é obrigatória'
       ]
     }
   },
